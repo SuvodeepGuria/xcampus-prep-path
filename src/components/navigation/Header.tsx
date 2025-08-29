@@ -86,10 +86,10 @@ export const Header: React.FC = () => {
               </DropdownMenu>
 
               <button
-                onClick={() => scrollToSection('admin-section')}
+                onClick={() => scrollToSection('experiences-section')}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
-                Admin Section
+                Experiences
               </button>
 
               <button
@@ -211,10 +211,10 @@ export const Header: React.FC = () => {
                   Professionals
                 </button>
                 <button
-                  onClick={() => scrollToSection('admin-section')}
+                  onClick={() => scrollToSection('experiences-section')}
                   className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
                 >
-                  Admin Section
+                  Experiences
                 </button>
                 <button
                   onClick={() => scrollToSection('contact')}

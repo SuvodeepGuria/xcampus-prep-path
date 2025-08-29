@@ -67,7 +67,12 @@ export const useAuth = () => {
           isLoading: false,
         });
 
-        return { success: true };
+      // Navigate to dashboard after successful login
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 100);
+      
+      return { success: true };
       }
 
       return { success: false, error: 'Invalid email or password' };
@@ -104,6 +109,11 @@ export const useAuth = () => {
         isLoading: false,
       });
 
+      // Navigate to dashboard after successful registration  
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 100);
+      
       return { success: true };
     } catch (error) {
       return { success: false, error: 'Registration failed. Please try again.' };
