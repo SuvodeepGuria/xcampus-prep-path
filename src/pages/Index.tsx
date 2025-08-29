@@ -1,13 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import { AuthProvider } from '@/components/providers/AuthProvider';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import { Header } from '@/components/navigation/Header';
+import { HeroSection } from '@/components/landing/HeroSection';
+import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
+import { FeaturesSection } from '@/components/landing/FeaturesSection';
+import { BenefitsSection } from '@/components/landing/BenefitsSection';
+import { TestimonialsSection } from '@/components/landing/TestimonialsSection';
+import { RewardsSection } from '@/components/landing/RewardsSection';
+import { AISection } from '@/components/landing/AISection';
+import { AlumniScrollSection } from '@/components/landing/AlumniScrollSection';
+import { FAQSection } from '@/components/landing/FAQSection';
+import { FinalCTASection } from '@/components/landing/FinalCTASection';
+import { Footer } from '@/components/landing/Footer';
+import { AIChatButton } from '@/components/chat/AIChatButton';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <ThemeProvider>
+      <AuthProvider>
+        <div className="min-h-screen bg-background">
+          <Header />
+          <main>
+            <HeroSection />
+            <HowItWorksSection />
+            <FeaturesSection />
+            <BenefitsSection />
+            <TestimonialsSection />
+            <RewardsSection />
+            <AISection />
+            <AlumniScrollSection />
+            <FAQSection />
+            <FinalCTASection />
+          </main>
+          <Footer />
+          <AIChatButton />
+        </div>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
 
