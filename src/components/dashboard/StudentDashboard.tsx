@@ -18,13 +18,17 @@ import {
   Clock,
   Users,
   ChevronRight,
-  Plus
+  Plus,
+  Moon,
+  Sun,
+  LogOut
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { useAuthContext } from '@/hooks/useAuth';
+import { useThemeContext } from '@/hooks/useTheme';
 import studentCollaboration from '@/assets/student-collaboration.png';
 
 interface DashboardCardProps {
@@ -72,7 +76,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ icon, label, isActive, onClic
 );
 
 export const StudentDashboard: React.FC = () => {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
+  const { mode, toggleTheme } = useThemeContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('dashboard');
 
@@ -140,6 +145,10 @@ export const StudentDashboard: React.FC = () => {
               <span className="text-sm font-medium text-secondary">100 EXP</span>
             </div>
 
+            <Button variant="ghost" size="sm" onClick={toggleTheme}>
+              {mode === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+            </Button>
+
             <Button variant="ghost" size="sm">
               <User className="h-5 w-5" />
             </Button>
@@ -173,9 +182,13 @@ export const StudentDashboard: React.FC = () => {
             <div className="pt-4 border-t border-border">
               <Button 
                 variant="ghost" 
-                className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50"
+                className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
+                onClick={() => {
+                  logout();
+                  window.location.href = '/';
+                }}
               >
-                <ExternalLink className="h-5 w-5 mr-3" />
+                <LogOut className="h-5 w-5 mr-3" />
                 Log Out
               </Button>
             </div>

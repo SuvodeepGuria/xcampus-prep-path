@@ -14,6 +14,7 @@ import { FAQSection } from '@/components/landing/FAQSection';
 import { FinalCTASection } from '@/components/landing/FinalCTASection';
 import { Footer } from '@/components/landing/Footer';
 import { AIChatButton } from '@/components/chat/AIChatButton';
+import { FloatingAIChat } from '@/components/chat/FloatingAIChat';
 
 const Index = () => {
   return (
@@ -33,8 +34,8 @@ const Index = () => {
             <FAQSection />
             <FinalCTASection />
           </main>
-          <Footer />
-          <AIChatButton />
+      <Footer />
+      <FloatingAIChat />
         </div>
       </AuthProvider>
     </ThemeProvider>

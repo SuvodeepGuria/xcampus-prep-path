@@ -67,7 +67,7 @@ export const HeroSection: React.FC = () => {
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.6s' }}>
               <div className="glass p-4 rounded-lg text-center hover-scale">
                 <div className="flex justify-center mb-2">
                   <Users className="h-6 w-6 text-primary" />
@@ -90,14 +90,6 @@ export const HeroSection: React.FC = () => {
                 </div>
                 <div className="text-2xl font-bold text-foreground">500+</div>
                 <div className="text-sm text-muted-foreground">Companies</div>
-              </div>
-              
-              <div className="glass p-4 rounded-lg text-center hover-scale">
-                <div className="flex justify-center mb-2">
-                  <MessageSquare className="h-6 w-6 text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-foreground">15K+</div>
-                <div className="text-sm text-muted-foreground">Discussions</div>
               </div>
             </div>
 
