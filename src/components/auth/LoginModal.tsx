@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuthContext } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -20,8 +21,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 }) => {
   const { login } = useAuthContext();
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
+    role: '',
     rememberMe: false,
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -43,6 +46,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -51,6 +58,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
     if (!formData.password) {
       newErrors.password = 'Password is required';
+    }
+
+    if (!formData.role) {
+      newErrors.role = 'Role is required';
     }
 
     setErrors(newErrors);
@@ -65,11 +76,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     setIsLoading(true);
     
     try {
-      const result = await login(formData.email, formData.password);
+      const result = await login(formData.email, formData.password, formData.name, formData.role as 'student' | 'professional' | 'admin');
       
       if (result.success) {
         onClose();
-        setFormData({ email: '', password: '', rememberMe: false });
+        setFormData({ name: '', email: '', password: '', role: '', rememberMe: false });
         setErrors({});
       } else {
         setErrors({ general: result.error || 'Login failed' });
@@ -89,6 +100,22 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             {errors.general}
           </div>
         )}
+
+        <div className="space-y-2">
+          <Label htmlFor="name">Full Name</Label>
+          <Input
+            id="name"
+            name="name"
+            type="text"
+            value={formData.name}
+            onChange={handleInputChange}
+            placeholder="Enter your full name"
+            className={errors.name ? 'border-destructive' : ''}
+          />
+          {errors.name && (
+            <p className="text-sm text-destructive">{errors.name}</p>
+          )}
+        </div>
 
         <div className="space-y-2">
           <Label htmlFor="email">Email Address</Label>
@@ -119,6 +146,28 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           />
           {errors.password && (
             <p className="text-sm text-destructive">{errors.password}</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="role">Role</Label>
+          <Select value={formData.role} onValueChange={(value) => {
+            setFormData(prev => ({ ...prev, role: value }));
+            if (errors.role) {
+              setErrors(prev => ({ ...prev, role: '' }));
+            }
+          }}>
+            <SelectTrigger className={errors.role ? 'border-destructive' : ''}>
+              <SelectValue placeholder="Select your role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="student">Student</SelectItem>
+              <SelectItem value="professional">Professional</SelectItem>
+              <SelectItem value="admin">Admin</SelectItem>
+            </SelectContent>
+          </Select>
+          {errors.role && (
+            <p className="text-sm text-destructive">{errors.role}</p>
           )}
         </div>
 

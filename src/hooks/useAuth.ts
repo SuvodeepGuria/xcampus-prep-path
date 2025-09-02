@@ -42,18 +42,18 @@ export const useAuth = () => {
     setTimeout(checkAuth, 1000);
   }, []);
 
-  const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
+  const login = async (email: string, password: string, name?: string, role?: 'student' | 'professional' | 'admin'): Promise<{ success: boolean; error?: string }> => {
     try {
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      // Mock validation
-      if (email === 'test@example.com' && password === 'password') {
+      // Mock validation - accept any email/password combination
+      if (email && password && name && role) {
         const mockUser: User = {
-          id: 'user-mock',
+          id: `user-${Date.now()}`,
           email,
-          fullName: 'Test User',
-          role: 'student',
+          fullName: name,
+          role,
           points: 150,
           createdAt: new Date().toISOString(),
           achievements: ['first-post'],

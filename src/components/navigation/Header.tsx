@@ -54,12 +54,15 @@ export const Header: React.FC = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center space-x-2">
+            <button 
+              onClick={() => window.location.href = '/'}
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+            >
               <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
                 <span className="text-xl font-bold text-primary-foreground">X</span>
               </div>
               <span className="text-xl font-bold text-foreground">XCampus</span>
-            </div>
+            </button>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
@@ -86,7 +89,13 @@ export const Header: React.FC = () => {
               </DropdownMenu>
 
               <button
-                onClick={() => window.location.href = '/experiences'}
+                onClick={() => {
+                  if (isAuthenticated) {
+                    window.location.href = '/experiences';
+                  } else {
+                    handleOpenLogin();
+                  }
+                }}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
                 Experiences
@@ -211,7 +220,13 @@ export const Header: React.FC = () => {
                   Professionals
                 </button>
                 <button
-                  onClick={() => window.location.href = '/experiences'}
+                  onClick={() => {
+                    if (isAuthenticated) {
+                      window.location.href = '/experiences';
+                    } else {
+                      handleOpenLogin();
+                    }
+                  }}
                   className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
                 >
                   Experiences
