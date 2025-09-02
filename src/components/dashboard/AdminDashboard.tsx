@@ -247,6 +247,28 @@ export const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
+          {/* Share Experiences Section for Admin */}
+          <Card className="mb-8 p-6 bg-gradient-to-r from-accent/10 via-primary/10 to-secondary/10 border-accent/20">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-bold text-foreground mb-2 flex items-center">
+                  <Shield className="h-5 w-5 mr-2 text-primary" />
+                  Manage Experiences
+                </h3>
+                <p className="text-muted-foreground">
+                  Review, moderate and manage student experiences
+                </p>
+              </div>
+              <Button 
+                onClick={() => window.location.href = '/experiences'}
+                className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary-glow hover:to-accent"
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                View Experiences
+              </Button>
+            </div>
+          </Card>
+
           {/* Charts and Analytics Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
             {/* Student Activity Chart */}

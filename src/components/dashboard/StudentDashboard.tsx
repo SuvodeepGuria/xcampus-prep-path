@@ -247,6 +247,28 @@ export const StudentDashboard: React.FC = () => {
             </div>
           </Card>
 
+          {/* Share Experiences Section */}
+          <Card className="mb-8 p-6 bg-gradient-to-r from-accent/10 via-primary/10 to-secondary/10 border-accent/20">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-bold text-foreground mb-2 flex items-center">
+                  <MessageSquare className="h-5 w-5 mr-2 text-primary" />
+                  Share Your Experience
+                </h3>
+                <p className="text-muted-foreground">
+                  Help fellow students by sharing your interview experiences and insights
+                </p>
+              </div>
+              <Button 
+                onClick={() => window.location.href = '/experiences'}
+                className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary-glow hover:to-accent"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Share Experience
+              </Button>
+            </div>
+          </Card>
+
           {/* Student Heat Map */}
           <Card className="mb-8 p-6">
             <h3 className="text-lg font-semibold mb-4">Student Heat Map</h3>

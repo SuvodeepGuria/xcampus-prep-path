@@ -86,7 +86,7 @@ export const Header: React.FC = () => {
               </DropdownMenu>
 
               <button
-                onClick={() => scrollToSection('experiences-section')}
+                onClick={() => window.location.href = '/experiences'}
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
                 Experiences
@@ -211,7 +211,7 @@ export const Header: React.FC = () => {
                   Professionals
                 </button>
                 <button
-                  onClick={() => scrollToSection('experiences-section')}
+                  onClick={() => window.location.href = '/experiences'}
                   className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
                 >
                   Experiences
