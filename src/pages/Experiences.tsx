@@ -31,15 +31,15 @@ export const Experiences: React.FC = () => {
       );
     }
 
-    if (filters.company) {
+    if (filters.company && filters.company !== 'all-companies') {
       filtered = filtered.filter(exp => exp.company === filters.company);
     }
 
-    if (filters.role) {
+    if (filters.role && filters.role !== 'all-roles') {
       filtered = filtered.filter(exp => exp.role === filters.role);
     }
 
-    if (filters.year) {
+    if (filters.year && filters.year !== 'all-years') {
       filtered = filtered.filter(exp => 
         new Date(exp.createdAt).getFullYear().toString() === filters.year
       );

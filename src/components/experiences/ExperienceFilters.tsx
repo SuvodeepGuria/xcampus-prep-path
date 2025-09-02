@@ -70,7 +70,7 @@ export const ExperienceFilters: React.FC<ExperienceFiltersProps> = ({
             <SelectValue placeholder="Select Year" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Years</SelectItem>
+            <SelectItem value="all-years">All Years</SelectItem>
             <SelectItem value="2024">2024</SelectItem>
             <SelectItem value="2023">2023</SelectItem>
             <SelectItem value="2022">2022</SelectItem>
@@ -86,7 +86,7 @@ export const ExperienceFilters: React.FC<ExperienceFiltersProps> = ({
             <SelectValue placeholder="Select Company" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Companies</SelectItem>
+            <SelectItem value="all-companies">All Companies</SelectItem>
             <SelectItem value="Google">Google</SelectItem>
             <SelectItem value="Microsoft">Microsoft</SelectItem>
             <SelectItem value="Amazon">Amazon</SelectItem>
@@ -105,7 +105,7 @@ export const ExperienceFilters: React.FC<ExperienceFiltersProps> = ({
             <SelectValue placeholder="Select Role" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Roles</SelectItem>
+            <SelectItem value="all-roles">All Roles</SelectItem>
             <SelectItem value="Software Engineer">Software Engineer</SelectItem>
             <SelectItem value="Senior Software Engineer">Senior Software Engineer</SelectItem>
             <SelectItem value="Product Manager">Product Manager</SelectItem>
