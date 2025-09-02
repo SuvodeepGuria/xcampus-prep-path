@@ -8,6 +8,7 @@ import { AuthProvider } from '@/components/providers/AuthProvider';
 import { FloatingAIChat } from '@/components/chat/FloatingAIChat';
 import Index from "./pages/Index";
 import { Dashboard } from './pages/Dashboard';
+import { Experiences } from './pages/Experiences';
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
                   <FloatingAIChat />
                 </>
               } />
+              <Route path="/experiences" element={<Experiences />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
