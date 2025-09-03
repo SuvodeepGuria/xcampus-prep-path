@@ -10,6 +10,8 @@ interface ExperienceFiltersProps {
     company?: string;
     role?: string;
     search?: string;
+    experienceType?: string;
+    branchType?: string;
   }) => void;
 }
 
@@ -21,6 +23,8 @@ export const ExperienceFilters: React.FC<ExperienceFiltersProps> = ({
     company: '',
     role: '',
     search: '',
+    experienceType: '',
+    branchType: '',
   });
 
   const handleFilterChange = (key: string, value: string) => {
@@ -30,7 +34,7 @@ export const ExperienceFilters: React.FC<ExperienceFiltersProps> = ({
   };
 
   const clearFilters = () => {
-    const clearedFilters = { year: '', company: '', role: '', search: '' };
+    const clearedFilters = { year: '', company: '', role: '', search: '', experienceType: '', branchType: '' };
     setFilters(clearedFilters);
     onFilterChange(clearedFilters);
   };
@@ -51,7 +55,7 @@ export const ExperienceFilters: React.FC<ExperienceFiltersProps> = ({
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -113,6 +117,43 @@ export const ExperienceFilters: React.FC<ExperienceFiltersProps> = ({
             <SelectItem value="Frontend Developer">Frontend Developer</SelectItem>
             <SelectItem value="Backend Developer">Backend Developer</SelectItem>
             <SelectItem value="Full Stack Developer">Full Stack Developer</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={filters.experienceType}
+          onValueChange={(value) => handleFilterChange('experienceType', value)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Experience Type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all-types">All Types</SelectItem>
+            <SelectItem value="placement">Placement</SelectItem>
+            <SelectItem value="internship">Internship</SelectItem>
+            <SelectItem value="hackathon">Hackathon</SelectItem>
+            <SelectItem value="higher-studies">Higher Studies</SelectItem>
+            <SelectItem value="certification">Certification</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={filters.branchType}
+          onValueChange={(value) => handleFilterChange('branchType', value)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Branch Type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all-branches">All Branches</SelectItem>
+            <SelectItem value="computer-science">Computer Science</SelectItem>
+            <SelectItem value="electrical">Electrical Engineering</SelectItem>
+            <SelectItem value="mechanical">Mechanical Engineering</SelectItem>
+            <SelectItem value="civil">Civil Engineering</SelectItem>
+            <SelectItem value="chemical">Chemical Engineering</SelectItem>
+            <SelectItem value="electronics">Electronics & Communication</SelectItem>
+            <SelectItem value="aerospace">Aerospace Engineering</SelectItem>
+            <SelectItem value="biotechnology">Biotechnology</SelectItem>
           </SelectContent>
         </Select>
       </div>

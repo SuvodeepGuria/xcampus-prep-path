@@ -31,6 +31,11 @@ import { useAuthContext } from '@/hooks/useAuth';
 import { useThemeContext } from '@/hooks/useTheme';
 import { PointsCard } from '@/components/rewards/PointsCard';
 import { RedemptionModal } from '@/components/rewards/RedemptionModal';
+import { SwagCard } from '@/components/rewards/SwagCard';
+import { PodcastsSection } from '@/components/dashboard/PodcastsSection';
+import { HeatMapCard } from '@/components/dashboard/HeatMapCard';
+import { Footer } from '@/components/layout/Footer';
+import { usePoints } from '@/hooks/usePoints';
 import studentCollaboration from '@/assets/student-collaboration.png';
 
 interface DashboardCardProps {
@@ -80,9 +85,68 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ icon, label, isActive, onClic
 export const StudentDashboard: React.FC = () => {
   const { user, logout } = useAuthContext();
   const { mode, toggleTheme } = useThemeContext();
+  const { pointsData, redeemReward } = usePoints();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('dashboard');
   const [showRedemptionModal, setShowRedemptionModal] = useState(false);
+
+  // Mock swag items
+  const swagItems = [
+    {
+      id: 'swag-1',
+      title: 'XCampus T-Shirt',
+      description: 'Premium cotton tee with logo',
+      pointsRequired: 200,
+      category: 'student' as const,
+      icon: '👕',
+      inStock: true,
+    },
+    {
+      id: 'swag-2',
+      title: 'XCampus Mug',
+      description: 'Ceramic coffee mug',
+      pointsRequired: 150,
+      category: 'student' as const,
+      icon: '☕',
+      inStock: true,
+    },
+    {
+      id: 'swag-3',
+      title: 'Laptop Stickers Pack',
+      description: 'Cool tech stickers bundle',
+      pointsRequired: 100,
+      category: 'student' as const,
+      icon: '💻',
+      inStock: true,
+    },
+    {
+      id: 'swag-4',
+      title: 'XCampus Hoodie',
+      description: 'Premium hooded sweatshirt',
+      pointsRequired: 500,
+      category: 'student' as const,
+      icon: '🧥',
+      inStock: true,
+    },
+  ];
+
+  const handleSwagRedeem = (item: any) => {
+    const result = redeemReward({
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      pointsRequired: item.pointsRequired,
+      category: item.category,
+      icon: item.icon,
+      type: 'voucher' as const,
+    });
+    
+    if (result.success) {
+      alert(`Successfully redeemed ${item.title}!`);
+    } else {
+      alert(result.message);
+    }
+  };
 
   const sidebarItems = [
     { icon: <TrendingUp className="h-5 w-5" />, label: 'Placement Exp', key: 'placement' },
@@ -273,13 +337,20 @@ export const StudentDashboard: React.FC = () => {
             </div>
           </Card>
 
-          {/* Student Heat Map */}
-          <Card className="mb-8 p-6">
-            <h3 className="text-lg font-semibold mb-4">Student Heat Map</h3>
-            <div className="bg-muted/30 h-32 rounded-lg flex items-center justify-center">
-              <p className="text-muted-foreground">Interactive heat map visualization</p>
-            </div>
-          </Card>
+          {/* Enhanced Sections */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <HeatMapCard />
+            <SwagCard 
+              swagItems={swagItems} 
+              userPoints={pointsData?.currentPoints || 0}
+              onRedeem={handleSwagRedeem}
+            />
+          </div>
+
+          {/* Podcasts Section */}
+          <div className="mb-8">
+            <PodcastsSection />
+          </div>
 
           {/* Quick Actions Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
@@ -468,6 +539,9 @@ export const StudentDashboard: React.FC = () => {
         isOpen={showRedemptionModal} 
         onClose={() => setShowRedemptionModal(false)} 
       />
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

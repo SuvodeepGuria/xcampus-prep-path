@@ -64,6 +64,42 @@ const STUDENT_REWARDS: Reward[] = [
     category: 'student',
     icon: '👨‍🏫',
     type: 'event'
+  },
+  {
+    id: 'xcampus-tshirt',
+    title: 'XCampus T-Shirt',
+    description: 'Premium cotton tee with XCampus logo',
+    pointsRequired: 200,
+    category: 'student',
+    icon: '👕',
+    type: 'voucher'
+  },
+  {
+    id: 'xcampus-mug',
+    title: 'XCampus Coffee Mug',
+    description: 'Ceramic coffee mug with XCampus branding',
+    pointsRequired: 150,
+    category: 'student',
+    icon: '☕',
+    type: 'voucher'
+  },
+  {
+    id: 'stickers-pack',
+    title: 'Laptop Stickers Pack',
+    description: 'Cool tech stickers bundle for your laptop',
+    pointsRequired: 100,
+    category: 'student',
+    icon: '💻',
+    type: 'voucher'
+  },
+  {
+    id: 'xcampus-hoodie',
+    title: 'XCampus Hoodie',
+    description: 'Premium hooded sweatshirt with XCampus logo',
+    pointsRequired: 500,
+    category: 'student',
+    icon: '🧥',
+    type: 'voucher'
   }
 ];
 

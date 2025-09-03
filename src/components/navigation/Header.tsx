@@ -66,47 +66,81 @@ export const Header: React.FC = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              {/* User Section Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center space-x-1 text-sm font-medium text-foreground hover:text-primary transition-colors">
-                  <span>User Section</span>
-                  <ChevronDown className="h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48">
-                  <DropdownMenuItem 
-                    onClick={() => scrollToSection('students-section')}
-                    className="cursor-pointer"
+              {/* Show different nav items based on authentication and current page */}
+              {window.location.pathname === '/dashboard' ? (
+                <>
+                  <button
+                    onClick={() => {
+                      if (isAuthenticated) {
+                        window.location.href = '/experiences';
+                      } else {
+                        handleOpenLogin();
+                      }
+                    }}
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
                   >
-                    Students
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => scrollToSection('professionals-section')}
-                    className="cursor-pointer"
+                    Experiences
+                  </button>
+                  <button
+                    onClick={() => scrollToSection('contact')}
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
                   >
-                    Professionals
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    Contact Us
+                  </button>
+                </>
+              ) : window.location.pathname === '/experiences' ? (
+                // Hide user section when on experiences page, show only dashboard link
+                <button
+                  onClick={() => window.location.href = '/dashboard'}
+                  className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  Dashboard
+                </button>
+              ) : (
+                // Default navigation for home page
+                <>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center space-x-1 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                      <span>User Section</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-48">
+                      <DropdownMenuItem 
+                        onClick={() => scrollToSection('students-section')}
+                        className="cursor-pointer"
+                      >
+                        Students
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        onClick={() => scrollToSection('professionals-section')}
+                        className="cursor-pointer"
+                      >
+                        Professionals
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
 
-              <button
-                onClick={() => {
-                  if (isAuthenticated) {
-                    window.location.href = '/experiences';
-                  } else {
-                    handleOpenLogin();
-                  }
-                }}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-              >
-                Experiences
-              </button>
+                  <button
+                    onClick={() => {
+                      if (isAuthenticated) {
+                        window.location.href = '/experiences';
+                      } else {
+                        handleOpenLogin();
+                      }
+                    }}
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  >
+                    Experiences
+                  </button>
 
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-              >
-                Contact Us
-              </button>
+                  <button
+                    onClick={() => scrollToSection('contact')}
+                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                  >
+                    Contact Us
+                  </button>
+                </>
+              )}
             </nav>
 
             {/* Right side actions */}

@@ -43,6 +43,7 @@ import { useAuthContext } from '@/hooks/useAuth';
 import { useThemeContext } from '@/hooks/useTheme';
 import { PointsCard } from '@/components/rewards/PointsCard';
 import { RedemptionModal } from '@/components/rewards/RedemptionModal';
+import { Footer } from '@/components/layout/Footer';
 
 interface AdminCardProps {
   title: string;
@@ -468,6 +469,9 @@ export const AdminDashboard: React.FC = () => {
         isOpen={showRedemptionModal} 
         onClose={() => setShowRedemptionModal(false)} 
       />
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

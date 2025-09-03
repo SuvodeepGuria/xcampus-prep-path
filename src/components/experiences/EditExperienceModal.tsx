@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { useAuthContext } from '@/hooks/useAuth';
 import { Experience } from '@/types';
 
-interface ShareExperienceModalProps {
+interface EditExperienceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (experience: Experience) => void;
+  onSave: (experience: Experience) => void;
+  experience: Experience | null;
 }
 
-export const ShareExperienceModal: React.FC<ShareExperienceModalProps> = ({
+export const EditExperienceModal: React.FC<EditExperienceModalProps> = ({
   isOpen,
   onClose,
-  onSubmit,
+  onSave,
+  experience,
 }) => {
-  const { user } = useAuthContext();
   const [formData, setFormData] = useState({
     title: '',
     company: '',
@@ -32,15 +32,29 @@ export const ShareExperienceModal: React.FC<ShareExperienceModalProps> = ({
     branchType: '',
   });
 
+  useEffect(() => {
+    if (experience) {
+      setFormData({
+        title: experience.title,
+        company: experience.company,
+        role: experience.role,
+        type: experience.type,
+        difficulty: experience.difficulty,
+        content: experience.content,
+        year: new Date(experience.createdAt).getFullYear().toString(),
+        experienceType: (experience as any).experienceType || 'placement',
+        branchType: (experience as any).branchType || '',
+      });
+    }
+  }, [experience]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!user || !formData.title || !formData.content) return;
+    if (!experience || !formData.title || !formData.content) return;
 
-    const newExperience: Experience = {
-      id: `exp-${Date.now()}`,
-      userId: user.id,
-      user: user,
+    const updatedExperience: Experience = {
+      ...experience,
       title: formData.title,
       company: formData.company,
       role: formData.role,
@@ -51,30 +65,14 @@ export const ShareExperienceModal: React.FC<ShareExperienceModalProps> = ({
         formData.company.toLowerCase(),
         formData.role.toLowerCase().replace(/\s+/g, '-'),
         formData.type,
-        formData.difficulty
+        formData.difficulty,
+        formData.experienceType,
+        formData.branchType
       ].filter(Boolean),
-      likes: 0,
-      views: 0,
-      comments: [],
-      createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    onSubmit(newExperience);
-    
-    // Reset form
-    setFormData({
-      title: '',
-      company: '',
-      role: '',
-      type: 'technical',
-      difficulty: 'medium',
-      content: '',
-      year: new Date().getFullYear().toString(),
-      experienceType: 'placement',
-      branchType: '',
-    });
-    
+    onSave(updatedExperience);
     onClose();
   };
 
@@ -87,7 +85,7 @@ export const ShareExperienceModal: React.FC<ShareExperienceModalProps> = ({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-foreground">
-            Share Your Interview Experience
+            Edit Experience
           </DialogTitle>
         </DialogHeader>
 
@@ -269,7 +267,7 @@ export const ShareExperienceModal: React.FC<ShareExperienceModalProps> = ({
               className="bg-gradient-to-r from-primary to-primary-dark text-primary-foreground"
               disabled={!formData.title || !formData.content}
             >
-              Share Experience
+              Save Changes
             </Button>
           </div>
         </form>
