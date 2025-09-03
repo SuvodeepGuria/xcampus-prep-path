@@ -29,6 +29,8 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { useAuthContext } from '@/hooks/useAuth';
 import { useThemeContext } from '@/hooks/useTheme';
+import { PointsCard } from '@/components/rewards/PointsCard';
+import { RedemptionModal } from '@/components/rewards/RedemptionModal';
 import studentCollaboration from '@/assets/student-collaboration.png';
 
 interface DashboardCardProps {
@@ -80,6 +82,7 @@ export const StudentDashboard: React.FC = () => {
   const { mode, toggleTheme } = useThemeContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [showRedemptionModal, setShowRedemptionModal] = useState(false);
 
   const sidebarItems = [
     { icon: <TrendingUp className="h-5 w-5" />, label: 'Placement Exp', key: 'placement' },
@@ -198,7 +201,8 @@ export const StudentDashboard: React.FC = () => {
         {/* Main Content */}
         <main className="flex-1 p-4 lg:p-8">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            <PointsCard onRedeemClick={() => setShowRedemptionModal(true)} />
             <DashboardCard
               title="Profile Score"
               count={85}
@@ -458,6 +462,12 @@ export const StudentDashboard: React.FC = () => {
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
+
+      {/* Redemption Modal */}
+      <RedemptionModal 
+        isOpen={showRedemptionModal} 
+        onClose={() => setShowRedemptionModal(false)} 
+      />
     </div>
   );
 };

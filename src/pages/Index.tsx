@@ -1,7 +1,5 @@
 import React from 'react';
-import { AuthProvider } from '@/components/providers/AuthProvider';
-import { ThemeProvider } from '@/components/providers/ThemeProvider';
-import { Header } from '@/components/navigation/Header';
+import { PageLayout } from '@/components/layout/PageLayout';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 import { FeaturesSection } from '@/components/landing/FeaturesSection';
@@ -12,33 +10,25 @@ import { AISection } from '@/components/landing/AISection';
 import { AlumniScrollSection } from '@/components/landing/AlumniScrollSection';
 import { FAQSection } from '@/components/landing/FAQSection';
 import { FinalCTASection } from '@/components/landing/FinalCTASection';
-import { Footer } from '@/components/landing/Footer';
-import { AIChatButton } from '@/components/chat/AIChatButton';
 import { FloatingAIChat } from '@/components/chat/FloatingAIChat';
 
 const Index = () => {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <div className="min-h-screen bg-background">
-          <Header />
-          <main>
-            <HeroSection />
-            <HowItWorksSection />
-            <FeaturesSection />
-            <BenefitsSection />
-            <TestimonialsSection />
-            <RewardsSection />
-            <AISection />
-            <AlumniScrollSection />
-            <FAQSection />
-            <FinalCTASection />
-          </main>
-      <Footer />
+    <>
+      <PageLayout>
+        <HeroSection />
+        <HowItWorksSection />
+        <FeaturesSection />
+        <BenefitsSection />
+        <TestimonialsSection />
+        <RewardsSection />
+        <AISection />
+        <AlumniScrollSection />
+        <FAQSection />
+        <FinalCTASection />
+      </PageLayout>
       <FloatingAIChat />
-        </div>
-      </AuthProvider>
-    </ThemeProvider>
+    </>
   );
 };
 

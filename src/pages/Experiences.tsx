@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Header } from '@/components/navigation/Header';
+import { PageLayout } from '@/components/layout/PageLayout';
 import { FloatingAIChat } from '@/components/chat/FloatingAIChat';
 import { ExperienceCard } from '@/components/experiences/ExperienceCard';
 import { ExperienceFilters } from '@/components/experiences/ExperienceFilters';
@@ -85,10 +85,9 @@ export const Experiences: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <div className="container mx-auto px-4 py-8">
+    <>
+      <PageLayout>
+        <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-2">Experiences</h1>
@@ -129,15 +128,16 @@ export const Experiences: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
 
-      <ShareExperienceModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        onSubmit={handleNewExperience}
-      />
-
+        <ShareExperienceModal
+          isOpen={isShareModalOpen}
+          onClose={() => setIsShareModalOpen(false)}
+          onSubmit={handleNewExperience}
+        />
+        </div>
+      </PageLayout>
+      
       <FloatingAIChat />
-    </div>
+    </>
   );
 };
