@@ -13,6 +13,7 @@ interface ExperienceCardProps {
   onLike: (id: string) => void;
   onUpvote: (id: string) => void;
   onDelete?: (id: string) => void;
+  onEdit?: (experience: Experience) => void;
   canEdit?: boolean;
 }
 
@@ -21,6 +22,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
   onLike,
   onUpvote,
   onDelete,
+  onEdit,
   canEdit = false,
 }) => {
   const [showComments, setShowComments] = useState(false);
@@ -50,7 +52,13 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
-            <Avatar className="h-10 w-10">
+            <Avatar className="h-10 w-10 cursor-pointer hover:opacity-80" onClick={() => {
+              // Navigate to user profile
+              if (window.location.pathname.includes('/dashboard')) {
+                // If we're on dashboard, go to profile dashboard
+                window.location.href = '/dashboard';
+              }
+            }}>
               <AvatarImage src={experience.user.avatar} alt={experience.user.fullName} />
               <AvatarFallback className="bg-primary text-primary-foreground">
                 {getInitials(experience.user.fullName)}
@@ -63,12 +71,19 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
               <p className="text-sm text-muted-foreground">
                 {experience.company} • {experience.role}
               </p>
+              <p className="text-xs text-muted-foreground">
+                by {experience.user.fullName}
+              </p>
             </div>
           </div>
           
           {canEdit && (
             <div className="flex space-x-2">
-              <Button variant="ghost" size="sm">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => onEdit?.(experience)}
+              >
                 <Edit className="h-4 w-4" />
               </Button>
               <Button 

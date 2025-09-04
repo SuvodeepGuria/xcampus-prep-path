@@ -177,12 +177,15 @@ export const StudentDashboard: React.FC = () => {
               {isSidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
             
-            <div className="flex items-center space-x-2">
+            <button 
+              onClick={() => window.location.href = '/'}
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+            >
               <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
                 <span className="text-lg font-bold text-primary-foreground">X</span>
               </div>
               <span className="text-xl font-bold text-foreground hidden sm:block">XCampus</span>
-            </div>
+            </button>
           </div>
 
           <div className="flex-1 max-w-md mx-4">
@@ -195,6 +198,29 @@ export const StudentDashboard: React.FC = () => {
               />
             </div>
           </div>
+
+          {/* Dashboard Navigation */}
+          <nav className="hidden md:flex items-center space-x-6 mr-6">
+            <button
+              onClick={() => window.location.href = '/experiences'}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Experiences
+            </button>
+            <button
+              onClick={() => {
+                const footer = document.querySelector('footer');
+                if (footer) {
+                  footer.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = '/#contact';
+                }
+              }}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Contact Us
+            </button>
+          </nav>
 
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" className="relative">

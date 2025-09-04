@@ -4,23 +4,29 @@ import { FloatingAIChat } from '@/components/chat/FloatingAIChat';
 import { ExperienceCard } from '@/components/experiences/ExperienceCard';
 import { ExperienceFilters } from '@/components/experiences/ExperienceFilters';
 import { ShareExperienceModal } from '@/components/experiences/ShareExperienceModal';
+import { EditExperienceModal } from '@/components/experiences/EditExperienceModal';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useAuthContext } from '@/hooks/useAuth';
+import { usePoints } from '@/hooks/usePoints';
 import { mockExperiences } from '@/data/mock-data';
 import { Experience } from '@/types';
 
 export const Experiences: React.FC = () => {
   const { user } = useAuthContext();
+  const { earnPointsForAction } = usePoints();
   const [experiences, setExperiences] = useState<Experience[]>(mockExperiences);
   const [filteredExperiences, setFilteredExperiences] = useState<Experience[]>(mockExperiences);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [editingExperience, setEditingExperience] = useState<Experience | null>(null);
 
   const handleFilterChange = (filters: {
     year?: string;
     company?: string;
     role?: string;
     search?: string;
+    experienceType?: string;
+    branchType?: string;
   }) => {
     let filtered = [...experiences];
 
@@ -45,6 +51,18 @@ export const Experiences: React.FC = () => {
       );
     }
 
+    if (filters.experienceType && filters.experienceType !== 'all-types') {
+      filtered = filtered.filter(exp => 
+        (exp as any).experienceType === filters.experienceType
+      );
+    }
+
+    if (filters.branchType && filters.branchType !== 'all-branches') {
+      filtered = filtered.filter(exp => 
+        (exp as any).branchType === filters.branchType
+      );
+    }
+
     setFilteredExperiences(filtered);
   };
 
@@ -59,6 +77,12 @@ export const Experiences: React.FC = () => {
         ? { ...exp, likes: exp.likes + 1 }
         : exp
     ));
+
+    // Award points for receiving likes (every 10th like)
+    const experience = experiences.find(exp => exp.id === experienceId);
+    if (experience && (experience.likes + 1) % 10 === 0) {
+      earnPointsForAction('receive_likes');
+    }
   };
 
   const handleUpvote = (experienceId: string) => {
@@ -82,12 +106,27 @@ export const Experiences: React.FC = () => {
   const handleNewExperience = (newExperience: Experience) => {
     setExperiences(prev => [newExperience, ...prev]);
     setFilteredExperiences(prev => [newExperience, ...prev]);
+    
+    // Award points for sharing experience
+    earnPointsForAction('share_experience');
+  };
+
+  const handleEditExperience = (updatedExperience: Experience) => {
+    setExperiences(prev => prev.map(exp => 
+      exp.id === updatedExperience.id ? updatedExperience : exp
+    ));
+    setFilteredExperiences(prev => prev.map(exp => 
+      exp.id === updatedExperience.id ? updatedExperience : exp
+    ));
+    setEditingExperience(null);
   };
 
   return (
     <>
       <PageLayout>
-        <div className="container mx-auto px-4 py-8">
+        {/* Blurred colorful background */}
+        <div className="fixed inset-0 z-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 backdrop-blur-3xl"></div>
+        <div className="relative z-10 container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-2">Experiences</h1>
@@ -112,8 +151,9 @@ export const Experiences: React.FC = () => {
               experience={experience}
               onLike={handleLike}
               onUpvote={handleUpvote}
-              onDelete={user?.role === 'admin' ? handleDelete : undefined}
-              canEdit={user?.role === 'admin'}
+              onDelete={user?.role === 'admin' || experience.user.id === user?.id ? handleDelete : undefined}
+              onEdit={user?.role === 'admin' || experience.user.id === user?.id ? setEditingExperience : undefined}
+              canEdit={user?.role === 'admin' || experience.user.id === user?.id}
             />
           ))}
 
@@ -133,6 +173,13 @@ export const Experiences: React.FC = () => {
           isOpen={isShareModalOpen}
           onClose={() => setIsShareModalOpen(false)}
           onSubmit={handleNewExperience}
+        />
+
+        <EditExperienceModal
+          isOpen={!!editingExperience}
+          onClose={() => setEditingExperience(null)}
+          onSave={handleEditExperience}
+          experience={editingExperience}
         />
         </div>
       </PageLayout>

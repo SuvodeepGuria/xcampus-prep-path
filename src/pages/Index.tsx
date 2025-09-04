@@ -18,12 +18,12 @@ const Index = () => {
       <PageLayout>
         <HeroSection />
         <HowItWorksSection />
+        <AlumniScrollSection />
         <FeaturesSection />
         <BenefitsSection />
         <TestimonialsSection />
         <RewardsSection />
         <AISection />
-        <AlumniScrollSection />
         <FAQSection />
         <FinalCTASection />
       </PageLayout>

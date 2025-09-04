@@ -198,6 +198,20 @@ export const usePoints = () => {
     return true;
   };
 
+  // Specific point earning actions
+  const earnPointsForAction = (action: 'account_creation' | 'share_experience' | 'answer_question' | 'receive_likes' | 'verified_badge' | 'refer_friend') => {
+    const pointValues = {
+      account_creation: 50,
+      share_experience: 50,
+      answer_question: 20,
+      receive_likes: 30, // For 10 likes
+      verified_badge: 100,
+      refer_friend: 75
+    };
+
+    return addPoints(pointValues[action], action.replace('_', ' '));
+  };
+
   const redeemReward = (reward: Reward): { success: boolean; message: string } => {
     if (!user || !pointsData) {
       return { success: false, message: 'User not authenticated' };
@@ -253,6 +267,7 @@ export const usePoints = () => {
     pointsData,
     redemptionHistory,
     addPoints,
+    earnPointsForAction,
     redeemReward,
     getAvailableRewards,
     getRedeemableRewards,
