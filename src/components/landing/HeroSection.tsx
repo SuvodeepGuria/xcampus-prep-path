@@ -2,18 +2,28 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { RegisterModal } from '@/components/auth/RegisterModal';
 import { LoginModal } from '@/components/auth/LoginModal';
+import { useAuthContext } from '@/hooks/useAuth';
 import { ArrowRight, Users, BookOpen, Trophy, MessageSquare } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
+  const { isAuthenticated } = useAuthContext();
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleOpenRegister = () => {
+    if (isAuthenticated) {
+      window.location.href = '/dashboard';
+      return;
+    }
     setShowLoginModal(false);
     setShowRegisterModal(true);
   };
 
   const handleOpenLogin = () => {
+    if (isAuthenticated) {
+      window.location.href = '/dashboard';
+      return;
+    }
     setShowRegisterModal(false);
     setShowLoginModal(true);
   };

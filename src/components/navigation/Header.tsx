@@ -195,7 +195,7 @@ export const Header: React.FC = () => {
                         <p className="text-sm font-medium">{user.fullName}</p>
                         <p className="text-xs text-muted-foreground">{user.email}</p>
                       </div>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => window.location.href = '/dashboard'}>
                         <User className="mr-2 h-4 w-4" />
                         Profile
                       </DropdownMenuItem>
@@ -217,7 +217,7 @@ export const Header: React.FC = () => {
                   className="hidden sm:inline-flex"
                   variant="default"
                 >
-                  Create Account
+                  Get Started
                 </Button>
               )}
 
@@ -279,7 +279,7 @@ export const Header: React.FC = () => {
                       className="w-full"
                       variant="default"
                     >
-                      Create Account
+                      Get Started
                     </Button>
                   </div>
                 )}
