@@ -22,8 +22,12 @@ import {
   X
 } from 'lucide-react';
 
+interface HeaderProps {
+  onContactUs?: () => void;
+  hideUserSection?: boolean;
+}
 
-export const Header: React.FC = () => {
+export const Header: React.FC<HeaderProps> = ({ onContactUs, hideUserSection }) => {
   const { isAuthenticated, user, logout } = useAuthContext();
   const { mode, toggleTheme } = useThemeContext();
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -31,11 +35,19 @@ export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleOpenLogin = () => {
+    if (isAuthenticated) {
+      window.location.href = '/dashboard';
+      return;
+    }
     setShowRegisterModal(false);
     setShowLoginModal(true);
   };
 
   const handleOpenRegister = () => {
+    if (isAuthenticated) {
+      window.location.href = '/dashboard';
+      return;
+    }
     setShowLoginModal(false);
     setShowRegisterModal(true);
   };
@@ -44,6 +56,8 @@ export const Header: React.FC = () => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    } else if (onContactUs && sectionId === 'contact') {
+      onContactUs();
     }
     setIsMobileMenuOpen(false);
   };
@@ -159,8 +173,8 @@ export const Header: React.FC = () => {
                 )}
               </Button>
 
-              {/* Authenticated User Menu */}
-              {isAuthenticated && user ? (
+              {/* User section - login/register or user menu */}
+              {!hideUserSection && isAuthenticated && user ? (
                 <div className="flex items-center space-x-3">
                   {/* Notifications */}
                   <Button variant="ghost" size="sm" className="relative">
@@ -210,7 +224,7 @@ export const Header: React.FC = () => {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
-              ) : (
+              ) : !hideUserSection ? (
                 /* Unauthenticated - Show Create Account button */
                 <Button 
                   onClick={handleOpenRegister}
@@ -219,7 +233,7 @@ export const Header: React.FC = () => {
                 >
                   Get Started
                 </Button>
-              )}
+              ) : null}
 
               {/* Mobile Menu Button */}
               <Button
@@ -272,7 +286,45 @@ export const Header: React.FC = () => {
                   Contact Us
                 </button>
                 
-                {!isAuthenticated && (
+                {!hideUserSection && isAuthenticated && user ? (
+                  <div className="pt-4 border-t border-border">
+                    <div className="flex items-center space-x-3 mb-3">
+                      <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                        {user.avatar ? (
+                          <img
+                            src={user.avatar}
+                            alt={user.fullName}
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                        ) : (
+                          <User className="h-4 w-4 text-primary" />
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">{user.fullName}</p>
+                        <p className="text-xs text-muted-foreground">{user.email}</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Button 
+                        onClick={() => window.location.href = '/dashboard'}
+                        variant="ghost"
+                        className="w-full justify-start"
+                      >
+                        <User className="mr-2 h-4 w-4" />
+                        Profile
+                      </Button>
+                      <Button 
+                        onClick={logout}
+                        variant="ghost"
+                        className="w-full justify-start text-red-500 hover:text-red-600"
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Sign Out
+                      </Button>
+                    </div>
+                  </div>
+                ) : !hideUserSection ? (
                   <div className="pt-4 border-t border-border">
                     <Button 
                       onClick={handleOpenRegister}
@@ -282,7 +334,7 @@ export const Header: React.FC = () => {
                       Get Started
                     </Button>
                   </div>
-                )}
+                ) : null}
 
                 {/* Theme toggle for mobile */}
                 <Button

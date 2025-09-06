@@ -32,6 +32,13 @@ export const RedemptionModal: React.FC<RedemptionModalProps> = ({ isOpen, onClos
     const result = redeemReward(reward);
     
     if (result.success) {
+      // Add coin burst animation to the button
+      const button = document.activeElement as HTMLElement;
+      if (button) {
+        button.classList.add('coin-burst');
+        setTimeout(() => button.classList.remove('coin-burst'), 800);
+      }
+      
       toast({
         title: "Reward Redeemed!",
         description: `You've successfully redeemed ${reward.title}`,

@@ -4,22 +4,17 @@ import { Footer } from '@/components/landing/Footer';
 
 interface PageLayoutProps {
   children: React.ReactNode;
-  showHeader?: boolean;
-  showFooter?: boolean;
+  hideUserSection?: boolean;
 }
 
-export const PageLayout: React.FC<PageLayoutProps> = ({ 
-  children, 
-  showHeader = true, 
-  showFooter = true 
-}) => {
+export const PageLayout: React.FC<PageLayoutProps> = ({ children, hideUserSection }) => {
   return (
     <div className="min-h-screen flex flex-col">
-      {showHeader && <Header />}
+      <Header hideUserSection={hideUserSection} />
       <main className="flex-1">
         {children}
       </main>
-      {showFooter && <Footer />}
+      <Footer />
     </div>
   );
 };

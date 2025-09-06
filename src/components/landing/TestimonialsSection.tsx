@@ -146,11 +146,7 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Additional Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 max-w-3xl mx-auto">
-          <div className="text-center p-6 bg-card border border-border rounded-lg">
-            <div className="text-3xl font-bold text-primary mb-2">95%</div>
-            <div className="text-sm text-muted-foreground">Success Rate</div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 max-w-2xl mx-auto">
           <div className="text-center p-6 bg-card border border-border rounded-lg">
             <div className="text-3xl font-bold text-primary mb-2">4.8/5</div>
             <div className="text-sm text-muted-foreground">Average Rating</div>

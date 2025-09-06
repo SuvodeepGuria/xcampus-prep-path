@@ -34,6 +34,7 @@ import { RedemptionModal } from '@/components/rewards/RedemptionModal';
 import { SwagCard } from '@/components/rewards/SwagCard';
 import { PodcastsSection } from '@/components/dashboard/PodcastsSection';
 import { HeatMapCard } from '@/components/dashboard/HeatMapCard';
+import { KarmaCard } from '@/components/rewards/KarmaCard';
 import { Footer } from '@/components/layout/Footer';
 import { usePoints } from '@/hooks/usePoints';
 import studentCollaboration from '@/assets/student-collaboration.png';
@@ -315,7 +316,7 @@ export const StudentDashboard: React.FC = () => {
               subtitle="In progress"
             />
             <DashboardCard
-              title="Saved Projects"
+              title="Bookmarks"
               count={8}
               icon={<Star className="h-5 w-5 text-white" />}
               color="bg-primary-glow"
